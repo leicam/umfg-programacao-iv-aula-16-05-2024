@@ -6,7 +6,7 @@ namespace umfg.consumer.console
 {
     internal class Program
     {
-        private const string C_CONNECTION_STRING = "amqps://slwvfbfu:b3tRnEZ4DuF5RhkFPk6iBHay28no7qyv@prawn.rmq.cloudamqp.com/slwvfbfu";
+        private const string C_CONNECTION_STRING = "amqps://biyvqons:GFBhQCGqFLv1BNy0gt1LbtyumvLBpBGm@jaragua.lmq.cloudamqp.com/biyvqons";
         private const string C_QUEUE = "umfg-programacao-iv-2024-teste";
 
         static void Main(string[] args)
@@ -26,9 +26,12 @@ namespace umfg.consumer.console
 
             var consumer = new EventingBasicConsumer(channel);
 
-            consumer.Received += ConsumerReceived;
+            consumer.Received += ConsumerReceived; //delegado
 
             channel.BasicConsume(queue: C_QUEUE, autoAck: true, consumer: consumer);
+
+            Console.WriteLine("Pressione [enter] para sair.");
+            Console.ReadLine();
         }
 
         private static void ConsumerReceived(object sender, BasicDeliverEventArgs e)

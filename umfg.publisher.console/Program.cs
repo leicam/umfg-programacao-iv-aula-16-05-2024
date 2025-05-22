@@ -5,7 +5,7 @@ namespace umfg.publisher.console
 {
     internal class Program
     {
-        private const string C_CONNECTION_STRING = "amqps://slwvfbfu:b3tRnEZ4DuF5RhkFPk6iBHay28no7qyv@prawn.rmq.cloudamqp.com/slwvfbfu";
+        private const string C_CONNECTION_STRING = "amqps://biyvqons:GFBhQCGqFLv1BNy0gt1LbtyumvLBpBGm@jaragua.lmq.cloudamqp.com/biyvqons";
         private const string C_QUEUE = "umfg-programacao-iv-2024-teste";
 
         static void Main(string[] args)
@@ -26,10 +26,21 @@ namespace umfg.publisher.console
                                         arguments: null);
 
                 Console.WriteLine("Inicio do envio de mensagens");
+
                 channel.BasicPublish(exchange: "",
                                         routingKey: C_QUEUE,
                                         basicProperties: null,
                                         body: Encoding.UTF8.GetBytes("Hello word!"));
+
+                foreach (var i in Enumerable.Range(1, 10))
+                {
+                    Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+                    channel.BasicPublish(exchange: "",
+                                        routingKey: C_QUEUE,
+                                        basicProperties: null,
+                                        body: Encoding.UTF8.GetBytes($"Mensagem {i}"));
+                    Console.WriteLine($"Mensagem {i} enviada");
+                }
 
                 Console.WriteLine("Fim do envio de mensagens");
             }
